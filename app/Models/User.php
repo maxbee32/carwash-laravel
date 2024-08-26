@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,4 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function isAdmin()
+{
+    return $this->admin; // this looks for an admin column in your users table
+}
+
 }
