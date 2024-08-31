@@ -29,45 +29,24 @@
                         <div class="p-5">
                             <!-- Display Session Messages -->
 
-                            {{-- @if (session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-
-
-                                </div>
-                            @endif
-
-                            @if (session('error'))
-                                <div class="alert alert-danger">
-                                    {{ session('error') }}
-                                </div>
-                            @endif --}}
-                            @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="fas fa-check-circle"></i> <!-- Success Icon -->
-        <strong>Success!</strong> {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
-@if (session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="fas fa-exclamation-triangle"></i> <!-- Error Icon -->
-        <strong>Error!</strong> {{ session('error') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
 
                             <form class="user" action="{{ route('register.post') }}" method="POST">
                                 @csrf
+
+                                             @if (session('error'))
+                                            <div class="alert alert-danger" >
+                                             {{ session('error') }}
+                                             </div>
+                                            @endif
+
+                                            @if (session('success'))
+                                            <div class="alert alert-success" >
+                                             {{ session('success') }}
+                                             </div>
+                                            @endif
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">

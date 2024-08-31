@@ -31,17 +31,5 @@ Route::get('/payment', function () {
     return view('payment');
 });
 
-// Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-//     Route::get('/login', [AdminController::class, 'getLogin'])->name('adminLogin');
-//     Route::post('/register', [AdminController::class, 'postLogin'])->name('adminLoginPost');
-
-//     Route::group(['middleware' => 'adminauth'], function () {
-//         Route::get('/', function () {
-//             return view('welcome');
-//         })->name('adminDashboard');
-
-//     });
-// });
-
 
 require __DIR__. '/admin-auth.php';

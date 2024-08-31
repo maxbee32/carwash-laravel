@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\AdminController;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\Auth\RegisterController;
+
+use App\Http\Controllers\Admin\Auth\VehicleController;
+use App\Http\Controllers\Admin\Auth\AdminController;
 
 
 
@@ -14,7 +14,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::group(['middleware' => 'adminauth'], function () {
         Route::get('/adminDashboard', function () {
             return view('admin.auth.dashboard');
-        })->name('adminDashboard');
+        })->name('dashboard');
 
     });
 });
@@ -42,22 +42,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('dashboard', [AdminController::class, 'getDashboard'])->name('dashboard');
 
 });
-// Route::prefix('admin')->middleware('guest:admin')->group(function () {
 
-//     Route::get('register', [RegisterController::class, 'create'])->name('admin.register');
-//     Route::post('register', [RegisterController::class, 'store']);
-
-//     Route::get('login', [AdminController::class, 'getLogin'])->name('admin.login');
-//     Route::post('login', [AdminController::class, 'postLogin']);
-
-// });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-
-    // Route::get('dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
-
-    Route::post('logout', [AdminController::class, 'destroy'])->name('admin.logout');
+    Route::get('logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 
 });
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('delete-vehicle', [VehicleController::class, 'deleteVehichle'])->name('delete-vehicle');
+    Route::get('add-vehicle', [VehicleController::class, 'addVehichle'])->name('add-vehicle');
+    Route::post('post-vehicle', [VehicleController::class, 'postVehicle'])->name('post-vehicle');
+    Route::get('list-vehicles', [VehicleController::class, 'viewVehicle'])->name('list-vehicle');
+    Route::delete('destroy-vehicle/{id}', [VehicleController::class, 'destroyVehicle'])->name('destroy-vehicle');
+    Route::post('update-vehicle/{id}', [VehicleController::class, 'updateVehicle'])->name('update-vehicle');
+    Route::get('edit-vehicle', [VehicleController::class, 'editVehicle'])->name('edit-vehicle');
+    Route::get('edit-car', [VehicleController::class, 'editCar'])->name('edit-car');
+
+});
+

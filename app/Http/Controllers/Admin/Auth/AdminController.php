@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -48,29 +50,30 @@ class AdminController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (auth()->guard('admin')->attempt($credentials)) {
-            // $user = auth()->guard('admin')->user();
-            // if($user->is_admin == 1){
-            return redirect()->intended('dashboard')
+
+
+            $admin = auth()->guard('admin')->user();
+
+             // Capitalize the first letter of firstname and lastname
+        $firstname = ucfirst(strtolower($admin->firstname));
+        $lastname = ucfirst(strtolower($admin->lastname));
+
+        // Store the capitalized names in the session
+        session([
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+        ]);
+
+            return redirect()->intended('/admin/dashboard')
                         ->with('success','You are Logged in sucessfully.');
         }
         else{
 
-        return redirect("adminLogin")->with('error','Whoops! invalid email and password.');
+        return redirect("/admin/login")->with('error','Whoops! invalid email and password.');
         }
     }
 
 
-
-    public function adminLogout(Request $request)
-    {
-        auth()->guard('admin')->logout();
-        Session::flush();
-        Session::put('success', 'You are logout sucessfully');
-        return redirect(route('adminLogin'));
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
     public function postRegistration(Request $request): RedirectResponse
     {
         // Validate the incoming request data
@@ -93,7 +96,7 @@ class AdminController extends Controller
         }
 
         // Create the admin user
-         $admin= Admin::create([
+          Admin::create([
             'email' => strtolower($request->input('email')), // Ensure the email is lowercase
             'firstname' => $request->input('firstname'),
             'lastname' => $request->input('lastname'),
@@ -107,5 +110,19 @@ class AdminController extends Controller
         return back()->with('error', 'Failed to create account.');
             }
     }
+
+
+
+
+    public function adminLogout()
+    {
+        auth()->guard('admin')->logout();
+        return Redirect::to('/admin/login')->with('success', 'You are logout sucessfully');
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     */
+
 
 }
