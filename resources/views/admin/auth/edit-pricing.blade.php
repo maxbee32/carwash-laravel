@@ -9,7 +9,7 @@
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ECW-Edit Vehicle</title>
+  <title>ECW-Edit Price</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -318,13 +318,17 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Edit Vehicle Type</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Edit Price</h6>
                         </div>
                         <div class="card-body">
-                            {{-- @if(!empty($vehicles))
-                            @foreach($vehicles as $vehicle) --}}
-                            <form class="user" action="{{ route('update-vehicle', $editvehicles->id) }}" method="POST" enctype="multipart/form-data">
+
+
+                            <form class="user" action="{{ route('update-price',$editprices->id) }}" method="POST">
                                 @csrf
+                                {{-- @method('PUT') --}}
+                                {{-- @if(!empty($editprices))
+                            @foreach($editprices as $price) --}}
+
 
                                              @if (session('error'))
                                             <div class="alert alert-danger" >
@@ -338,31 +342,31 @@
                                              </div>
                                             @endif
                                         {{-- @endforeach
-                                        @endif --}}
+                                            @endif --}}
+
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1"><b>Vehicle Type</b></label>
-                                  <input type="text" name='title' class="form-control form-control-user" value='{{ $editvehicles->title }}'  placeholder="Vehicle Type">
-                                  @error('title')
+                                  <label for="exampleInputEmail1"><b>Description</b></label>
+                                  <input type="text" name='description' class="form-control form-control-user" value='{{$editprices->description}}'  placeholder="Washing Description">
+                                  @error('description')
                                   <span class="text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                               @enderror
                                 </div>
                                 <div class="form-group">
-                                  <label for="exampleInputFile"><b>Upload Vehicle Type Image</b></label> &nbsp;
-                                  <input type="file" id="exampleInputFile" name="icon" value="{{ old('icon', $editvehicles->icon) }}">
-                                  <!-- Show the current image name -->
-                                    @if($editvehicles->icon)
-                                <p>Current Image: {{ basename($editvehicles->icon) }}</p>
-                                    @endif
-                                  @error('icon')
+                                  <label for="exampleInputEmail1"><b>Price</b></label>
+                                  <input type="text" name='price' class="form-control form-control-user" value='{{$editprices->price}}'  placeholder="Amount">
+                                  @error('price')
                                   <span class="text-danger" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                               @enderror
                                 </div>
+
+
                                 <button type="submit" class="btn btn-primary btn-user btn-block">Update</button>
-                              </form>
+
+                            </form>
 
 
                                 </div>
@@ -424,18 +428,9 @@
     {{-- <script src="js/sb-admin-2.min.js"></script> --}}
     <script src="{{asset('assets/admin/js/sb-admin-2.min.js')}}"></script>
 
-
-
-
-
-
      <!-- Page level plugins -->
      <script src=" {{asset('assets/admin/vendor/datatables/jquery.dataTables.min.js')}}"></script>
      <script src="{{asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-
-
-
 
 </body>
 

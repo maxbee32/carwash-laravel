@@ -81,7 +81,7 @@ class AdminController extends Controller
 
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['bail', 'lowercase', 'required', 'string', 'email:rfc,filter,dns', 'unique:admins'],
+            'email' => ['bail', 'lowercase', 'required', 'string', 'email:rfc,filter,dns','unique:admins'],
             'password' => [
                 'required',
                 'string',

@@ -89,10 +89,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Pricing:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Add Pricing</a>
-                        <a class="collapse-item" href="utilities-border.html">Update Pricing</a>
-                        <a class="collapse-item" href="utilities-animation.html">Delete Pricing</a>
-                        <a class="collapse-item" href="utilities-other.html">View Pricing</a>
+                        <a class="collapse-item" href="{{route('add-price')}}">Add Pricing</a>
+                        <a class="collapse-item" href="{{route('updating-price')}}">Update Pricing</a>
+                        <a class="collapse-item" href="{{route('delete-price')}}">Delete Pricing</a>
+                        <a class="collapse-item" href="{{route('list-price')}}">View Pricing</a>
                     </div>
                 </div>
             </li>
@@ -315,6 +315,22 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    @csrf
+
+
+
+                    @if (session('error'))
+                   <div class="alert alert-danger" >
+                    {{ session('error') }}
+                    </div>
+                   @endif
+
+                   @if (session('success'))
+                   <div class="alert alert-success" >
+                    {{ session('success') }}
+                    </div>
+                   @endif
+                   
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">All Vehicle</h6>

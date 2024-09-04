@@ -1,6 +1,3 @@
-<div>
-    <!-- An unexamined life is not worth living. - Socrates -->
-</div>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +6,7 @@
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ECW-Edit Vehicle</title>
+  <title>ECW-All Price</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -82,7 +79,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class=" fab fa-cc-visa"></i>
@@ -100,7 +97,7 @@
                 </div>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-car-alt"></i>
@@ -134,6 +131,7 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -316,65 +314,61 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    @csrf
+                    
+
+
+                                 @if (session('error'))
+                                <div class="alert alert-danger" >
+                                 {{ session('error') }}
+                                 </div>
+                                @endif
+
+                                @if (session('success'))
+                                <div class="alert alert-success" >
+                                 {{ session('success') }}
+                                 </div>
+                                @endif
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Edit Vehicle Type</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">All Price</h6>
                         </div>
                         <div class="card-body">
-                            {{-- @if(!empty($vehicles))
-                            @foreach($vehicles as $vehicle) --}}
-                            <form class="user" action="{{ route('update-vehicle', $editvehicles->id) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-
-                                             @if (session('error'))
-                                            <div class="alert alert-danger" >
-                                             {{ session('error') }}
-                                             </div>
-                                            @endif
-
-                                            @if (session('success'))
-                                            <div class="alert alert-success" >
-                                             {{ session('success') }}
-                                             </div>
-                                            @endif
-                                        {{-- @endforeach
-                                        @endif --}}
-                                <div class="form-group">
-                                  <label for="exampleInputEmail1"><b>Vehicle Type</b></label>
-                                  <input type="text" name='title' class="form-control form-control-user" value='{{ $editvehicles->title }}'  placeholder="Vehicle Type">
-                                  @error('title')
-                                  <span class="text-danger" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
-                                </div>
-                                <div class="form-group">
-                                  <label for="exampleInputFile"><b>Upload Vehicle Type Image</b></label> &nbsp;
-                                  <input type="file" id="exampleInputFile" name="icon" value="{{ old('icon', $editvehicles->icon) }}">
-                                  <!-- Show the current image name -->
-                                    @if($editvehicles->icon)
-                                <p>Current Image: {{ basename($editvehicles->icon) }}</p>
-                                    @endif
-                                  @error('icon')
-                                  <span class="text-danger" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">Update</button>
-                              </form>
-
-
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            {{-- <th>No</th> --}}
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(!empty($prices))
+                                        @foreach($prices as $vehicle)
+                                            <tr>
+                                                {{-- <td>{{ $vehicle->id }}</td> --}}
+                                                <td>{{ $vehicle->description }}</td>
+                                                <td>£{{ $vehicle->price }}</td>
+                                            </tr>
+                                        @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>
+                    </div>
 
-                                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
 
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
-
                 </div>
             </footer>
             <!-- End of Footer -->
@@ -424,9 +418,13 @@
     {{-- <script src="js/sb-admin-2.min.js"></script> --}}
     <script src="{{asset('assets/admin/js/sb-admin-2.min.js')}}"></script>
 
+    <!-- Page level plugins -->
+    {{-- <script src="vendor/chart.js/Chart.min.js"></script> --}}
+    <script src="{{asset('assets/admin/vendor/chart.js/Chart.min.js')}}"></script>
 
-
-
+    <!-- Page level custom scripts -->
+    <script src="{{asset('assets/admin/js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{asset('assets/admin/js/demo/chart-pie-demo.js')}}"></script>
 
 
      <!-- Page level plugins -->
@@ -434,7 +432,8 @@
      <script src="{{asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
 
-
+     <!-- Page level custom scripts -->
+     <script src="{{asset('assets/admin/js/demo/datatables-demo.js')}}"></script>
 
 
 </body>

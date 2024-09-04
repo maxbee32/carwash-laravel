@@ -89,10 +89,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Pricing:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Add Pricing</a>
-                        <a class="collapse-item" href="utilities-border.html">Update Pricing</a>
-                        <a class="collapse-item" href="utilities-animation.html">Delete Pricing</a>
-                        <a class="collapse-item" href="utilities-other.html">View Pricing</a>
+                        <a class="collapse-item" href="{{route('add-price')}}">Add Pricing</a>
+                        <a class="collapse-item" href="{{route('updating-price')}}">Update Pricing</a>
+                        <a class="collapse-item" href="{{route('delete-price')}}">Delete Pricing</a>
+                        <a class="collapse-item" href="{{route('list-price')}}">View Pricing</a>
                     </div>
                 </div>
             </li>
@@ -238,8 +238,9 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle"
+                                        {{-- src="img/undraw_profile_1.svg" --}}
+                                            alt="%">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -250,7 +251,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                        <img class="rounded-circle"
+                                        {{-- src="img/undraw_profile_2.svg" --}}
                                             alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -262,7 +264,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                        <img class="rounded-circle"
+                                         {{-- src="img/undraw_profile_3.svg" --}}
                                             alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>

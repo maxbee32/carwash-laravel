@@ -12,13 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class VehicleController extends Controller
 {
-    // public function getVehichle()
-    // {
-    //     return view('admin.auth.vehicle');
-    // }
 
-
-    public function deleteVehichle()
+    public function deleteVehicle()
     {
          $vehicles = Vehicle::all();
 
@@ -68,7 +63,7 @@ class VehicleController extends Controller
         ]);
 
             if($validator->validated()){
-                return redirect()->route('add-vehicle')->with('success', "You've added new vehicle type successfully.");
+                return redirect()->route('list-vehicle')->with('success', "You've added new vehicle type successfully.");
             }else{
         return back()->with('error', 'Failed to create vehicle type.');
             }
@@ -90,7 +85,7 @@ class VehicleController extends Controller
 
         if ($vehicle) {
             $vehicle->delete();
-            return redirect()->back()->with('success', 'Vehicle deleted successfully!');
+            return redirect()->route('list-vehicle')->with('success', 'Vehicle deleted successfully!');
         }
 
         return redirect()->back()
@@ -109,12 +104,12 @@ class VehicleController extends Controller
 
 
 
-    public function editCar()
+    public function editCar($id)
     {
-         $vehicles = Vehicle::all();
+         $editvehicles = Vehicle::find($id);
 
         // Return a view with the vehicles data
-          return view('admin.auth.edit-vehicle' , compact('vehicles'));
+          return view('admin.auth.edit-vehicle' , compact('editvehicles'));
     }
 
 
@@ -143,7 +138,7 @@ class VehicleController extends Controller
         }
 
         if($vehicle->save()){
-            return redirect()->back()->with('success', 'Vehicle updated successfully!');
+            return redirect()->route('list-vehicle')->with('success', 'Vehicle updated successfully!');
         } else {
             return redirect()->back()->with('error', 'Vehicle update unsuccessful!');
         }

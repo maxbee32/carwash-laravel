@@ -79,7 +79,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class=" fab fa-cc-visa"></i>
@@ -89,10 +89,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Pricing:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Add Pricing</a>
-                        <a class="collapse-item" href="utilities-border.html">Update Pricing</a>
-                        <a class="collapse-item" href="utilities-animation.html">Delete Pricing</a>
-                        <a class="collapse-item" href="utilities-other.html">View Pricing</a>
+                        <a class="collapse-item" href="{{route('add-price')}}">Add Pricing</a>
+                        <a class="collapse-item" href="{{route('updating-price')}}">Update Pricing</a>
+                        <a class="collapse-item" href="{{route('delete-price')}}">Delete Pricing</a>
+                        <a class="collapse-item" href="{{route('list-price')}}">View Pricing</a>
                     </div>
                 </div>
             </li>
@@ -108,7 +108,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Vehicle:</h6>
                         <a class="collapse-item" href="{{route('add-vehicle')}}">Add Vehicle</a>
-                        <a class="collapse-item" href="utilities-border.html">Update Vehicle</a>
+                        <a class="collapse-item" href="{{route('edit-vehicle')}}">Update Vehicle</a>
                         <a class="collapse-item" href="{{route('delete-vehicle')}}">Delete Vehicle</a>
                         <a class="collapse-item" href="{{ route('list-vehicle') }}">View Vehicle</a>
                     </div>
@@ -347,16 +347,19 @@
                                     </thead>
 
                                     <tbody>
-                                        @if(!empty($vehicles))
+                                        {{-- @if(!empty($vehicles)) --}}
                                         @foreach($vehicles as $vehicle)
                                             <tr>
                                                 {{-- <td>{{ $vehicle->id }}</td> --}}
                                                 <td>{{ $vehicle->title }}</td>
                                                 <td><img src="{{ Storage::url($vehicle->icon) }}" alt="{{ $vehicle->title }}" width="50"></td>
                                                 <td style="text-align: center;">
-                                                 <a href="{{route('edit-car')}}"> <i value="Update" button data-toggle="modal" data-target="#deleteModal" alt="Update" class="fa fa-edit" style="font-size:20px;color:lime; cursor: pointer;"></i></a>
+                                                 <a href="{{route('edit-car',$vehicle->id)}}"> <i value="Update" button data-toggle="modal" alt="Update" class="fa fa-edit" style="font-size:20px;color:lime; cursor: pointer;"></i></a>
                                                 </td>
                                             </tr>
+
+                                            @endforeach
+                                          {{-- @endif --}}
 
                                     </tbody>
 
@@ -409,28 +412,8 @@
         </div>
     </div>
 
-
-     {{-- <!-- Delete Modal-->
-     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Ready to Delete Item?</h5>
-                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">×</span>
-                 </button>
-             </div>
-             <div class="modal-body">Select "Update" below if you are ready to update vehicle type.</div>
-             <div class="modal-footer">
-                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-
-                   <a href ='{{route('edit-car')}}'> <button type="submit"  class="btn btn-primary">Update</button></a>
- --}}
-
-                    @endforeach
-                    @endif
+                    {{-- @endforeach
+                    @endif --}}
              </div>
          </div>
      </div>

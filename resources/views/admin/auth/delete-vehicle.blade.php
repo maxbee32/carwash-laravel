@@ -89,10 +89,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Pricing:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Add Pricing</a>
-                        <a class="collapse-item" href="utilities-border.html">Update Pricing</a>
-                        <a class="collapse-item" href="utilities-animation.html">Delete Pricing</a>
-                        <a class="collapse-item" href="utilities-other.html">View Pricing</a>
+                        <a class="collapse-item" href="{{route('add-price')}}">Add Pricing</a>
+                        <a class="collapse-item" href="{{route('updating-price')}}">Update Pricing</a>
+                        <a class="collapse-item" href="{{route('delete-price')}}">Delete Pricing</a>
+                        <a class="collapse-item" href="{{route('list-price')}}">View Pricing</a>
                     </div>
                 </div>
             </li>
@@ -354,9 +354,19 @@
                                                 <td>{{ $vehicle->title }}</td>
                                                 <td><img src="{{ Storage::url($vehicle->icon) }}" alt="{{ $vehicle->title }}" width="50"></td>
                                                 <td style="text-align: center;">
-                                                    <i value="Delete" button data-toggle="modal" data-target="#deleteModal" alt="Delete" class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i>
+                                                    {{-- <i value="Delete" button data-toggle="modal" data-target="#deleteModal" alt="Delete" class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i> --}}
+                                                    <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                            <i class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i>
+                                                        </button>
+
+                                                        </form>
                                                 </td>
                                             </tr>
+                                            @endforeach
+                                        @endif
 
                                     </tbody>
 
@@ -411,7 +421,7 @@
 
 
      <!-- Delete Modal-->
-     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
      <div class="modal-dialog" role="document">
          <div class="modal-content">
@@ -436,7 +446,7 @@
              </div>
          </div>
      </div>
- </div>
+ </div> --}}
 
     <!-- Bootstrap core JavaScript-->
 
