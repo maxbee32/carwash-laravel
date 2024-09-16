@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,9 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 
 Route::get('/book', function () {
     return view('book');
@@ -30,6 +31,8 @@ Route::get('/starter-page', function () {
 Route::get('/payment', function () {
     return view('payment');
 });
+
+Route::get('/', [UserController::class, 'showService'])->name('index');
 
 
 require __DIR__. '/admin-auth.php';

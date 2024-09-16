@@ -45,7 +45,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -225,51 +225,35 @@
         <h2>Services</h2>
         <p>We offer a range of services designed to meet your every need:</p>
       </div><!-- End Section Title -->
-
       <div class="container">
 
         <div class="row gy-4">
 
-          <div class="col-xl-2 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-activity icon"></i></div>
-              <h4><a href="" class="stretched-link">Exterior Wash</a></h4>
+            @foreach($limitedServices as $description => $groupedServices)
+            @php
+                // Define the dynamic classes and delay values
+                $icons = ['bi-bounding-box-circles', 'bi-calendar4-week', 'bi-broadcast'];
+                $delays = [200, 300, 400];
+            @endphp
 
-            </div>
-          </div><!-- End Service Item -->
+                @foreach($groupedServices as $service)
+             @php
+                // Calculate the current index for class and delay cycling
+                $currentIcon = $icons[$loop->index % count($icons)];
+                $currentDelay = $delays[$loop->index % count($delays)];
+            @endphp
 
-          <div class="col-xl-2 col-md-5 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-              <h4><a href="" class="stretched-link">Interior Cleaning</a></h4>
-
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-2 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-              <h4><a href="" class="stretched-link">Oil Level Check</a></h4>
-
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-5 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="" class="stretched-link">Screen Wash Top Up</a></h4>
-
-            </div>
-
-          </div>
-          <div class="col-xl-3 col-md-5 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="" class="stretched-link">AirCon Sanitising</a></h4>
-
+            <div class="col-xl-2 col-md-5 d-flex" data-aos="fade-up" data-aos-delay="{{ $currentDelay }}">
+                <div class="service-item position-relative">
+                    <div class="icon"><i class="bi {{ $currentIcon }} icon"></i></div>
+                    <h4><a href="" class="stretched-link">{{ $service->service }}</a></h4>
+                </div>
             </div><!-- End Service Item -->
 
-        </div>
+        @endforeach
+
+        @endforeach
+
         <br>
         <p>
             Each service is carried out with meticulous attention to detail, ensuring your car looks and feels as good as new.
@@ -277,7 +261,9 @@
         <p>
             We are elevating standards, every service!
         </p>
-      </div>
+      {{-- </div> --}}
+    </div>
+</div>
 
     </section><!-- /Services Section -->
 
@@ -296,9 +282,6 @@
                 We use clean, top-quality materials and techniques that prevent damage and deliver exceptional results. We view our service as not just a car wash, but a therapeutic experience for your vehicle.
              </p>
         </div>
-          {{-- <div class="col-xl-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="#">Call To Action</a>
-          </div> --}}
         </div>
 
       </div>
@@ -317,56 +300,31 @@
       </div><!-- End Section Title -->
 
       <div class="container">
-
         <div class="row gy-4">
+            @foreach($services as $description => $groupedServices)
+                @php
+                    // Get the first service to access the price (all services under the same description have the same price)
+                    $firstService = $groupedServices->first();
 
-          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
-            <div class="pricing-item">
-              <h3>Exterior Clean Service</h3>
-              <h4><sup>From £39.99</sup></h4>
-              <ul>
-                <li><i class="bi bi-check"></i> <span>Complete Bodywork Wash & Wax</span></li>
-                <li><i class="bi bi-check"></i> <span>Fuel Flap, Door, and Boot Shut Cleaning</span></li>
-                <li><i class="bi bi-check"></i> <span>Alloy Wheel & Tyre Cleaning</span></li>
-                <li><i class="bi bi-check"></i> <span>Screen Wash Top-Up</span></li>
-                <li><i class="bi bi-check"></i> <span>Oil Level Check</span></li>
-              </ul>
+                    $delays = [200, 300, 400];
+                    // $currentIcon = $icons[$loop->index % count($icons)];
+                    $currentDelay = $delays[$loop->index % count($delays)];
+                @endphp
 
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-            <div class="pricing-item">
-              <h3>Interior & Exterior Clean Service</h3>
-              <h4><sup>From £79.99</sup></h4>
-              <ul>
-                <li><i class="bi bi-check"></i> <span>Exterior Cleaning</span></li>
-                <li><i class="bi bi-check"></i> <span>Interior Vacuum</span></li>
-                <li><i class="bi bi-check"></i> <span>Glass Cleaning</span></li>
-                <li><i class="bi bi-check"></i> <span>Dashboard Cleaning</span></li>
-
-              </ul>
-
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-            <div class="pricing-item">
-              <h3>Add-On Services</h3>
-
-              <ul>
-                <li><i class="bi bi-check"></i> <span>Trim Refresh - £14.99</span></li>
-                <li><i class="bi bi-check"></i> <span>
-                    Air Con Anti-Bacterial Clean - £29.99</span></li>
-
-              </ul>
-
-            </div>
-          </div><!-- End Pricing Item -->
-
+                <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="{{ $currentDelay }}">
+                    <div class="pricing-item">
+                        <h3>{{ $description }}</h3> <!-- Show Price Description -->
+                        <h4><sup>From £{{ $firstService->price }}</sup></h4> <!-- Show the Price -->
+                        <ul>
+                            @foreach($groupedServices as $service)
+                                <li><i class="bi bi-check"></i> <span>{{ $service->service }}</span></li> <!-- Show Service -->
+                            @endforeach
+                        </ul>
+                    </div>
+                </div><!-- End Pricing Item -->
+            @endforeach
         </div>
-
-      </div>
+    </div>
 
     </section><!-- /Pricing Section -->
 
@@ -406,8 +364,9 @@
                   <p>len@excellentcarwash.co.uk</p>
                 </div>
               </div><!-- End Info Item -->
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2475.4238612229597!2d-0.08190862447288048!3d51.65207550012541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761f3b29bde701%3A0xba44ad85a33659c!2sEnfield%20Town%20Station!5e0!3m2!1sen!2suk!4v1726272328421!5m2!1sen!2suk" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
             </div>
           </div>
 
@@ -477,7 +436,7 @@
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="d-flex align-items-center">
+          <a href="{!! url('/'); !!}" class="d-flex align-items-center">
             <span class="sitename">Excellent <br>Car Wash</span>
           </a>
           <div class="footer-contact pt-3">
@@ -509,7 +468,7 @@
       </div>
     </div>
 
-  
+
   </footer>
 
   <!-- Scroll Top -->

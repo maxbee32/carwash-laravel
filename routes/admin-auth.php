@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\Auth\VehicleController;
 use App\Http\Controllers\Admin\Auth\AdminController;
 use App\Http\Controllers\Admin\Auth\PriceController;
+use App\Http\Controllers\Admin\Auth\ServiceController;
+use App\Http\Controllers\Admin\Auth\VehicleController;
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('login', [AdminController::class, 'getLogin'])->name('adminLogin');
@@ -70,6 +71,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::post('update-price/{id}', [PriceController::class, 'updatePrice'])->name('update-price');
     Route::get('updating-price', [PriceController::class, 'updatePricing'])->name('updating-price');
     Route::get('edit-pricing/{id}', [PriceController::class, 'editPricing'])->name('edit-pricing');
+
+});
+
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('add-service', [ServiceController::class, 'ListPrice'])->name('add-service');
+    Route::post('post-service', [ServiceController::class, 'postService'])->name('post-service');
+    Route::get('view-service', [ServiceController::class, 'viewService'])->name('view-service');
+    Route::get('delete-service', [ServiceController::class, 'deleteService'])->name('delete-service');
+    Route::delete('destroy-service/{id}', [ServiceController::class, 'destroyService'])->name('destroy-service');
+    Route::post('update-service/{id}', [ServiceController::class, 'updateService'])->name('update-service');
+    Route::get('updating-service', [ServiceController::class, 'updateServicing'])->name('updating-service');
+    Route::get('edit-service/{id}', [ServiceController::class, 'editService'])->name('edit-servicing');
+
 
 });
 

@@ -33,7 +33,7 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css'>
 
 
-	
+
 	<!--     Fonts and icons     -->
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
@@ -64,7 +64,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#" class="active">Home</a></li>
+          <li><a href={!! url('/'); !!} class="active">Home</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -77,7 +77,7 @@
       <div class="container">
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="#">Home</a></li>
+            <li><a href="">Home</a></li>
             <li class="current">Booking</li>
           </ol>
         </nav>

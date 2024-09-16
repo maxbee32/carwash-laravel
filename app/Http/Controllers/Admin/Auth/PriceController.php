@@ -68,7 +68,7 @@ class PriceController extends Controller
 
 
     public function destroyPrice($id) {
-        $price = Price::where('id', $id)->firstorfail()->delete(); ;
+        $price = Price::where('id', $id)->firstorfail()->delete(); 
         if ($price) {
             // $price->delete();
             return redirect()->back()->with('success', 'Price deleted successfully!');
