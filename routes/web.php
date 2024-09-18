@@ -33,6 +33,7 @@ Route::get('/payment', function () {
 });
 
 Route::get('/', [UserController::class, 'showService'])->name('index');
+Route::post('contact-us', [UserController::class, 'storeContact'])->name('contact-us');
 
 
 require __DIR__. '/admin-auth.php';

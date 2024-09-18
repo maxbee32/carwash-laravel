@@ -246,7 +246,7 @@
             <div class="col-xl-2 col-md-5 d-flex" data-aos="fade-up" data-aos-delay="{{ $currentDelay }}">
                 <div class="service-item position-relative">
                     <div class="icon"><i class="bi {{ $currentIcon }} icon"></i></div>
-                    <h4><a href="" class="stretched-link">{{ $service->service }}</a></h4>
+                    <h4>{{ $service->service }}</h4>
                 </div>
             </div><!-- End Service Item -->
 
@@ -307,7 +307,6 @@
                     $firstService = $groupedServices->first();
 
                     $delays = [200, 300, 400];
-                    // $currentIcon = $icons[$loop->index % count($icons)];
                     $currentDelay = $delays[$loop->index % count($delays)];
                 @endphp
 
@@ -366,45 +365,82 @@
               </div><!-- End Info Item -->
               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2475.4238612229597!2d-0.08190862447288048!3d51.65207550012541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761f3b29bde701%3A0xba44ad85a33659c!2sEnfield%20Town%20Station!5e0!3m2!1sen!2suk!4v1726272328421!5m2!1sen!2suk" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-              {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
             </div>
           </div>
 
           <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
+            <form id="contact-form" action="{{ route('contact-us') }}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                @csrf
 
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
                 </div>
+                @endif
 
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
                 </div>
+                @endif
 
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                <div class="row gy-4">
+                    <div class="col-md-6">
+                        <label for="name-field" class="pb-2">Your Name</label>
+                        <input type="text" name="name" id="name-field" class="form-control" value="{{ old('name') }}">
+                        @error('name')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="email-field" class="pb-2">Your Email</label>
+                        <input type="email" class="form-control" name="email" id="email-field" value="{{ old('email') }}">
+                        @error('email')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="subject-field" class="pb-2">Subject</label>
+                        <input type="text" class="form-control" name="subject" id="subject-field" value="{{ old('subject') }}">
+                        @error('subject')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="message-field" class="pb-2">Message</label>
+                        <textarea class="form-control" name="message" rows="10" id="message-field">{{ old('message') }}</textarea>
+                        @error('message')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <button type="submit">Send Message</button>
+                    </div>
                 </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
             </form>
-          </div><!-- End Contact Form -->
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                @if ($errors->any() || session('success'))
+                    document.getElementById("contact-form").scrollIntoView({ behavior: 'instant' });
+                @endif
+            });
+        </script>
+
+        <!-- End Contact Form -->
 
         </div>
 
@@ -479,7 +515,7 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  {{-- <script src="assets/vendor/php-email-form/validate.js"></script> --}}
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
