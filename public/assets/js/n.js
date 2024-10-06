@@ -6,7 +6,7 @@ if (/Mobi/.test(navigator.userAgent)) {
     // if desktop device, use DateTimePicker
     $("#datepicker").datetimepicker({
       useCurrent: false,
-      format: "DD-MMM-YYYY",
+      format: "YYYY-MM-DD",
       showTodayButton: true,
       icons: {
         next: "fa fa-chevron-right",
@@ -15,7 +15,7 @@ if (/Mobi/.test(navigator.userAgent)) {
       }
     });
     $("#timepicker").datetimepicker({
-      format: "LT",
+      format: "HH:mm",
       icons: {
         up: "fa fa-chevron-up",
         down: "fa fa-chevron-down"

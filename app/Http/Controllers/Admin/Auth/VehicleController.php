@@ -35,7 +35,7 @@ class VehicleController extends Controller
         $validator = Validator::make($request->all(), [
 
             'title' => ['required', 'string', 'max:255'],
-            'icon' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+            'icon' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:10000']
         ]);
 
 

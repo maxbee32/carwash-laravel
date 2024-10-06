@@ -80,7 +80,7 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  --background-color: #3d4d6a;
+  --background-color: #37517e;
   --heading-color: #ffffff;
   color: var(--default-color);
   background-color: var(--background-color);
@@ -2116,6 +2116,6 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
+/* .starter-section {
   /* Add your styles here */
-}
+/* } */

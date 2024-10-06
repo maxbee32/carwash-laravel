@@ -64,7 +64,7 @@ p {
 
 .form-control {
     color: #223C60;
-    background-color: #223C60;
+    background-color: #fff;
     border: 2px solid transparent;
     height: 60px;
     padding-left: 20px;
@@ -72,18 +72,18 @@ p {
 }
 
 .form-control:focus {
-    color: white;
-    background-color: #37517e;
-    border: 2px solid #37517e;
+    color: black;
+    background-color: #fff;
+    border: 2px solid #fff;
     box-shadow: none;
 }
 
 .text {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 ::placeholder {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 }

@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-   
+
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +21,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'ticket',
         'email',
-        'password',
+        'postcode',
+        'address',
+        'total_amount',
+        'time',
+        'date',
+        'phone_number',
+        'vehicle',
+        'status',
     ];
 
     /**
@@ -31,7 +39,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -42,13 +50,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        // 'password' => 'hashed',
     ];
 
 
-    public function isAdmin()
-{
-    return $this->admin; // this looks for an admin column in your users table
-}
+//     public function isAdmin()
+// {
+//     return $this->admin; // this looks for an admin column in your users table
+// }
 
 }
