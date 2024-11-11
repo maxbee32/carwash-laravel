@@ -9,6 +9,7 @@
   <title>ECW-Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link href="{{asset('assets/img/water.webp')}}" rel="icon">
   <link href="{{asset('assets/img/water.webp')}}" rel="apple-touch-icon">
@@ -23,6 +24,21 @@
     <!-- Custom styles for this template-->
 
     <link href="{{asset('assets/admin/css/sb-admin-2.css')}}" rel="stylesheet">
+     {{-- @vite('resources/js/app.js') --}}
+    <script src="{{ asset('js/app.js') }}"></script>
+     <!-- Bootstrap core JavaScript-->
+     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+     <script type="module">
+         // Initialize Pusher and listen for events
+         window.Laravel = {'csrfToken': '{{csrf_token()}}'}
+         Echo.channel('totalVehicles')
+             .listen('UpdateDashboard', (e) => {
+                // console.log(e.order);
+                 // Update the vehicle count on the dashboard
+                 document.getElementById('total-vehicle').innerText =  e.totalVehicle;
+             });
+     </script>
 
 </head>
 
@@ -70,10 +86,11 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Appointment:</h6>
-                        <a class="collapse-item" href="buttons.html">Pending Appointment</a>
-                        <a class="collapse-item" href="cards.html">Approved Appointment</a>
-                        <a class="collapse-item" href="cards.html">Rejected Appointment</a>
-                        <a class="collapse-item" href="cards.html">All Appointment</a>
+                        <a class="collapse-item" href="{{route('edit-appointment')}}">Pending Appointment</a>
+                        <a class="collapse-item" href="{{route('approve-appointment')}}">Approved Appointment</a>
+                        <a class="collapse-item" href="{{route('reject-appointment')}}">Rejected Appointment</a>
+                        <a class="collapse-item" href="{{route('complete-appointment')}}">Completed Appointment</a>
+                        <a class="collapse-item" href="{{route('view-appointment')}}">All Appointment</a>
                     </div>
                 </div>
             </li>
@@ -360,20 +377,26 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
+                            {{-- @if(!empty($total_vehicle)) --}}
                             <div class="card border-left-primary shadow h-100 py-2">
+
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
+
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Vehicle</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-vehicle">{{$totalVehicle}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class=" fas fa-car fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
+
                                 </div>
+                                {{-- @endif --}}
                             </div>
+
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
@@ -383,8 +406,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Earnings </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">£ {{$total_amount}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
@@ -402,7 +425,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Car washed
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$total_car_washed}}</div>
                                             {{-- <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
@@ -432,7 +455,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$total_car_pending}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -561,7 +584,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+
 
 
     <script src="{{asset('assets/admin/vendor/jquery/jquery.min.js')}}"></script>

@@ -6,7 +6,7 @@
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ECW-Delete Vehicle</title>
+  <title>ECW-Pending Appointment</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -61,7 +61,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-calendar-alt"></i>
@@ -116,7 +116,7 @@
                 </div>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-car-alt"></i>
@@ -350,7 +350,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Delete Vehicle</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Pending Appointment</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -358,34 +358,70 @@
                                     <thead>
                                         <tr>
                                             {{-- <th>No</th> --}}
-                                            <th>Vehicle Type</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
+                                            <th>Ticket</th>
+                                            <th>Fullname</th>
+                                            <th>Email</th>
+                                            <th>Vehicle</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
 
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        @if(!empty($vehicles))
-                                        @foreach($vehicles as $vehicle)
-                                            <tr>
-                                                {{-- <td>{{ $vehicle->id }}</td> --}}
-                                                <td>{{ $vehicle->title }}</td>
-                                                <td><img src="{{ Storage::url($vehicle->icon) }}" alt="{{ $vehicle->title }}" width="50"></td>
-                                                <td style="text-align: center;">
-                                                    {{-- <i value="Delete" button data-toggle="modal" data-target="#deleteModal" alt="Delete" class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i> --}}
-                                                    <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                            <i class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i>
-                                                        </button>
+                                        @foreach($pendingappointment as $p_appointment)
 
-                                                        </form>
+                                            <tr>
+
+
+
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->ticket }}
+                                                    </a>
                                                 </td>
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->name }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->email }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->vehicle }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->date }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->time }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" style="text-decoration: none; color: inherit; display: block; padding: 8px;">
+                                                        {{ $p_appointment->total_amount }}
+                                                    </a>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a href="{{ route('editing-appointment', $p_appointment->id) }}" class="btn btn-warning" style="background-color: yellow; color: black; border: none; cursor: pointer; text-decoration: none; padding: 8px 16px; border-radius: 4px; display: inline-block;">
+                                                        {{ $p_appointment->status }}
+                                                    </a>
+                                                </td>
+
                                             </tr>
+
                                             @endforeach
-                                        @endif
+                                            {{-- @endif --}}
 
                                     </tbody>
 
@@ -438,34 +474,10 @@
         </div>
     </div>
 
-
-     <!-- Delete Modal-->
-     {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Ready to Delete Item?</h5>
-                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">×</span>
-                 </button>
-             </div>
-             <div class="modal-body">Select "Delete" below if you are ready to remove vehicle type.</div>
-             <div class="modal-footer">
-                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-                 <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
-
-                    @endforeach
-                    @endif
              </div>
          </div>
      </div>
- </div> --}}
+ </div>
 
     <!-- Bootstrap core JavaScript-->
 

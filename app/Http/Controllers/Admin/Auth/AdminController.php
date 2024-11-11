@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Auth;
 namespace App\Http\Controllers\Admin\Auth;
 
+use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Events\UpdateDashboard;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +38,16 @@ class AdminController extends Controller
 
     public function getDashboard()
     {
-        return view('admin.auth.dashboard');
+        $totalVehicle = User::whereNotNull('ticket')->count();
+        $total_amount = User::sum('total_amount');
+        $total_car_washed = User::where('status','completed')->count();
+        $total_car_pending = User::where('status','pending')->count();
+
+         // Trigger the event with the updated count
+         event(new UpdateDashboard($totalVehicle));
+        // UpdateDashboard::dispatch($totalVehicle);
+        // Return the count or pass it to a view if needed
+        return view('admin.auth.dashboard', compact('totalVehicle', 'total_amount','total_car_washed','total_car_pending'));
     }
 
 

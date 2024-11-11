@@ -73,10 +73,11 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Appointment:</h6>
-                        <a class="collapse-item" href="buttons.html">Pending Appointment</a>
-                        <a class="collapse-item" href="cards.html">Approved Appointment</a>
-                        <a class="collapse-item" href="cards.html">Rejected Appointment</a>
-                        <a class="collapse-item" href="cards.html">All Appointment</a>
+                        <a class="collapse-item" href="{{route('edit-appointment')}}">Pending Appointment</a>
+                        <a class="collapse-item" href="{{route('approve-appointment')}}">Approved Appointment</a>
+                        <a class="collapse-item" href="{{route('reject-appointment')}}">Rejected Appointment</a>
+                        <a class="collapse-item" href="{{route('complete-appointment')}}">Completed Appointment</a>
+                        <a class="collapse-item" href="{{route('view-appointment')}}">All Appointment</a>
                     </div>
                 </div>
             </li>

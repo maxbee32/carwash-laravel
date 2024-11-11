@@ -26,11 +26,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 
     <!-- CSS Files -->
+    {{-- <link rel="stylesheet" href="assets/css/checkout.css" /> --}}
+
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/material-bootstrap-wizard.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/css/payment.css" rel="stylesheet" />
     <link href="assets/css/main.css" rel="stylesheet">
+   <!-- stripe -->
+   <script>
+    const successUrl = "{{ route('success') }}";  // Rendered URL will be assigned to this variable
+</script>
+    <script src="assets/js/checkout.js" defer></script>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+
 
 </head>
 
@@ -65,78 +76,44 @@
         <div class="container p-0">
             <div class="card px-4">
                 <p class="h8 py-3">Payment Details</p>
-                <form action="{{ route('checkout.createPayment') }}" method="POST">
-                    @csrf
-
-                    @if (session('error'))
-                    <div class="alert alert-danger" >
-                     {{ session('error') }}
-                     </div>
-                    @endif
-
-                     @if (session('success'))
-                     <div class="alert alert-success" >
-                     {{ session('success') }}
-                    </div>
-                     @endif
 
 
-                    <div class="row gx-3">
-                        <div class="col-12">
-                            @error('holdername')
-                            <span class="text-danger" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                            <div class="d-flex flex-column">
-                                <p class="text mb-1">Person Name</p>
-                                <input class="form-control mb-3" type="text" name="holdername" placeholder="Name" >
-                            </div>
+                {{-- <form id="payment-form" action="{{ route('checkout.createPayment') }}" method="POST" > --}}
+                    {{-- @csrf --}}
 
-                        </div>
-                        <div class="col-12">
-                            @error('cardno')
-                            <span class="text-danger" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                            <div class="d-flex flex-column">
-                                <p class="text mb-1">Card Number</p>
-                                <input class="form-control mb-3" type="text" name="cardno" placeholder="1234 5678 435678" >
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            @error('exp')
-                            <span class="text-danger" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                            <div class="d-flex flex-column">
-                                <p class="text mb-1">Expiry</p>
-                                <input class="form-control mb-3" type="text" name="exp" placeholder="MM/YYYY" >
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            @error('cvv')
-                            <span class="text-danger" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                            <div class="d-flex flex-column">
-                                <p class="text mb-1">CVV/CVC</p>
-                                <input class="form-control mb-3 pt-2" type="password" name="cvv" placeholder="***" >
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <button type="submit" class="btn btn-primary mb-3" name="total_amount">
-                                    <span>Pay £1</span>
-                                    <span class="fas fa-arrow-right ms-1"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    {{-- <p class="text mb-1">Email </p>
+                    <input class="form-control mb-3" id="email" type="email" name="email" placeholder="Enter email address" > --}}
+
+                    <div class="stripe-container">
+            {{ csrf_field() }}
+            <form id="payment-form">
+            <div id="payment-element">
+            <!-- Stripe.js injects the Payment Element here-->
+            </div>
+            <button id="submit" class="btn btn-primary mb-3">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Pay {{ Session::get('booking_data.total_amount') }}</span>
+            </button>
+            <div id="payment-message" class="hidden"></div>
+            </form>
+          </div>
+
+
+          <!-- Modal Structure -->
+    <div id="payment-modal" class="modal hidden">
+        <div class="modal-content">
+            <p id="payment-message"></p>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
+
+
+                <div id="dpm-annotation">
+                    <p>
+                      Payment methods are dynamically displayed based on customer location, and currency.&nbsp;
+                      <a href="#" target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">Preview payment methods by transaction</a>
+                    </p>
+                  </div>
             </div>
         </div>
 
@@ -162,3 +139,5 @@
 </body>
 
 </html>
+
+

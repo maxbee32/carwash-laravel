@@ -266,27 +266,29 @@ public function saveBooking(Request $request)
         // Handle form submission when "Finish" button is clicked
         if ($request->has('finish')) {
 
-            $Id =IdGenerator::generate(['table'=>'users','field'=>'ticket','length'=>10,'prefix'=>'REF-']);
-            // Save the booking (example with a Booking model)
-            $booking = User::create(array_merge(
-                ['ticket'=>$Id],
-                ['status'=> 'pending'],
-                $data
-            ));
-           // create($data);
+        //     $Id =IdGenerator::generate(['table'=>'users','field'=>'ticket','length'=>10,'prefix'=>'REF-']);
+        //     // Save the booking (example with a Booking model)
+        //     $booking = User::create(array_merge(
+        //         ['ticket'=>$Id],
+        //         ['status'=> 'pending'],
+        //         $data
+        //     ));
+        //    // create($data);
 
-            // Send confirmation email (Example)
-            Mail::to($data['email'])->send(new BookingConfirmationMail($booking));
-
-            // Clear the session after the booking is completed
-            $request->session()->forget('booking_data');
+        //     // Send confirmation email (Example)
+        //     Mail::to($data['email'])->send(new BookingConfirmationMail($booking));
 
             // Redirect to the payment page with a success message
             return redirect()->route('payment')->with('success', 'Proceed to making payment.');
+
+
+
         }
 
         // Move to the next step
         return redirect()->back()->withInput()->with('step', $request->step + 1);
+        // Clear the session after the booking is completed
+    //      $request->session()->forget('booking_data');
 
     } catch (\Exception $e) {
         // Error handling: log the exception and return an error message
@@ -329,6 +331,56 @@ public function storeSessionData(Request $request) {
     ]);
 }
 
+
+public function saveBookingAfterPayment(Request $request)
+{
+
+    // dd($request->all());
+     // Log current session data
+     Log::info('Current session:', $request->session()->all());
+
+    // Retrieve booking data from the session
+    $bookingData = $request->session()->get('booking_data');
+
+    // Log the booking data retrieval
+    Log::info('Retrieved booking data:', $bookingData);
+
+    if (!$bookingData) {
+        return response()->json(['success' => false, 'message' => 'No booking data found.']);
+    }
+
+    // Check if the payment intent ID matches, if necessary
+        // if ($request->payment_intent_id) {
+        // Generate a unique ticket ID
+        $Id = IdGenerator::generate(['table' => 'users', 'field' => 'ticket', 'length' => 10, 'prefix' => 'REF-']);
+
+        // Save the booking data to the database
+        $booking = User::create(array_merge(
+            ['ticket' => $Id],
+            ['status' => 'Pending'],  // Set the status to confirmed after successful payment
+            // ['vehicle' => $bookingData['vehicle']],
+            // ['total_amount' => $bookingData['total_amount']],
+            // ['date' => $bookingData['date']],
+            // ['time'=>$bookingData['time']],
+            // ['name'=>$bookingData['name']],
+            // ['email' =>$bookingData['email']],
+            // ['phone_number'=>$bookingData['phone_number']],
+            // ['postcode'=>$bookingData['postcode']],
+            // ['address'=>$bookingData['address']],
+             $bookingData
+        ));
+
+        // Send confirmation email (Example)
+        Mail::to($booking['email'])->send(new BookingConfirmationMail($booking));
+
+        // Clear the session data
+        $request->session()->forget('booking_data');
+
+        return response()->json(['success' => true, 'message' => 'Booking saved successfully.']);
+    }
+
+//     return response()->json(['success' => false, 'message' => 'Failed to save booking.']);
+// }
 
 
 }

@@ -341,7 +341,6 @@
 
     <div class="wizard-footer">
         <div class="pull-right">
-           {{-- / @if (session('step', 1) < 5) --}}
 <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Next' />
 {{-- <button type="submit" class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Next'>Next </button> --}}
 {{-- @endif --}}
@@ -432,7 +431,7 @@
                     $('#address').val(response.data.address);
                     $('#postcode').val(response.data.postcode);
                     $('#phoneNumber').val(response.data.phone_number);
-                    
+
                     }
                 }
             });

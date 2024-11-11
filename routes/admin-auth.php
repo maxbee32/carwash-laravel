@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\Auth\AdminController;
 use App\Http\Controllers\Admin\Auth\PriceController;
 use App\Http\Controllers\Admin\Auth\ServiceController;
 use App\Http\Controllers\Admin\Auth\VehicleController;
+use App\Http\Controllers\Admin\Auth\AppointmentController;
+use App\Http\Controllers\DashboardController;
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('login', [AdminController::class, 'getLogin'])->name('adminLogin');
@@ -32,22 +34,24 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 });
 
 
+// Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+//     Route::get('t_vehicle', [DashboardController::class, 'totalVehicle'])->name('t_vehicle');
+
+// });
+
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('dashboard', [AdminController::class, 'getDashboard'])->name('dashboard');
+    Route::get('logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
     Route::get('fpassword', [AdminController::class, 'getForgetPassword'])->name('fpassword');
 
 });
 
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::get('dashboard', [AdminController::class, 'getDashboard'])->name('dashboard');
+// Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+//     Route::get('logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 
-});
-
-
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::get('logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
-
-});
+// });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('delete-vehicle', [VehicleController::class, 'deleteVehicle'])->name('delete-vehicle');
@@ -88,3 +92,19 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 });
 
+
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+
+    Route::get('view-appointment', [AppointmentController::class, 'viewAppointment'])->name('view-appointment');
+    Route::get('edit-appointment',[AppointmentController::class,'editAppointment'])->name('edit-appointment');
+    Route::get('editing-appointment/{id}',[AppointmentController::class,'editingAppointment'])->name('editing-appointment');
+    Route::post('update-appointment/{id}',[AppointmentController::class,'updateAppointment'])->name('update-appointment');
+    Route::get('approve-appointment', [AppointmentController::class, 'approveAppointment'])->name('approve-appointment');
+    Route::get('reject-appointment', [AppointmentController::class, 'rejectedAppointment'])->name('reject-appointment');
+    Route::get('complete-appointment', [AppointmentController::class, 'completedAppointment'])->name('complete-appointment');
+
+
+
+
+});

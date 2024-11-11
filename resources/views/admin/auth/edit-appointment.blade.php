@@ -1,3 +1,6 @@
+<div>
+    <!-- An unexamined life is not worth living. - Socrates -->
+</div>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +9,7 @@
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ECW-Delete Vehicle</title>
+  <title>ECW-Edit Appointment</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -61,7 +64,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-calendar-alt"></i>
@@ -116,7 +119,7 @@
                 </div>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-car-alt"></i>
@@ -150,8 +153,6 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -334,75 +335,136 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    @if (session('error'))
-                    <div class="alert alert-danger" >
-                     {{ session('error') }}
-                     </div>
-                    @endif
-
-                    @if (session('success'))
-                    <div class="alert alert-success" >
-                     {{ session('success') }}
-                     </div>
-                    @endif
-
-                    <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Delete Vehicle</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Edit Appointment</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            {{-- <th>No</th> --}}
-                                            <th>Vehicle Type</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
 
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        @if(!empty($vehicles))
-                                        @foreach($vehicles as $vehicle)
-                                            <tr>
-                                                {{-- <td>{{ $vehicle->id }}</td> --}}
-                                                <td>{{ $vehicle->title }}</td>
-                                                <td><img src="{{ Storage::url($vehicle->icon) }}" alt="{{ $vehicle->title }}" width="50"></td>
-                                                <td style="text-align: center;">
-                                                    {{-- <i value="Delete" button data-toggle="modal" data-target="#deleteModal" alt="Delete" class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i> --}}
-                                                    <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                            <i class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i>
-                                                        </button>
+                            <form class="user"
+                            action="{{ route('update-appointment', $pendingappointment->id) }}"
+                                method="POST">
+                                @csrf
+                                {{-- @method('PUT') --}}
+                                {{-- @if(!empty($editprices))
+                            @foreach($editprices as $price) --}}
 
-                                                        </form>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        @endif
 
-                                    </tbody>
+                                             @if (session('error'))
+                                            <div class="alert alert-danger" >
+                                             {{ session('error') }}
+                                             </div>
+                                            @endif
 
-                                </table>
+                                            @if (session('success'))
+                                            <div class="alert alert-success" >
+                                             {{ session('success') }}
+                                             </div>
+                                            @endif
+                                        {{-- @endforeach
+                                            @endif --}}
+
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1"><b>Ticket</b></label>
+                                  <input type="text" name='ticket' class="form-control form-control-user" value='{{$pendingappointment->ticket}}'  placeholder="ticket" readonly>
+                                  @error('ticket')
+                                  <span class="text-danger" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1"><b>Fullname</b></label>
+                                  <input type="text" name='name' class="form-control form-control-user" value='{{$pendingappointment->name}}'  placeholder="name" readonly>
+                                  @error('name')
+                                  <span class="text-danger" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>Email</b></label>
+                                    <input type="text" name='email' class="form-control form-control-user" value='{{$pendingappointment->email}}'  placeholder="email" readonly>
+                                    @error('email')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>Vehicle</b></label>
+                                    <input type="text" name='vehicle' class="form-control form-control-user" value='{{$pendingappointment->vehicle}}'  placeholder="email" readonly>
+                                    @error('vehicle')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>Date</b></label>
+                                    <input type="text" name='date' class="form-control form-control-user" value='{{$pendingappointment->date}}'  placeholder="date" readonly>
+                                    @error('date')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>Time</b></label>
+                                    <input type="text" name='time' class="form-control form-control-user" value='{{$pendingappointment->time}}'  placeholder="time" readonly>
+                                    @error('time')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>Amount</b></label>
+                                    <input type="text" name='amount' class="form-control form-control-user" value='{{$pendingappointment->total_amount}}'  placeholder="total Amount" readonly>
+                                    @error('amount')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>Status</b></label>
+                                    {{-- <input type="text" name='status' class="form-control form-control-user" value='{{$pendingappointment->status}}'  placeholder="status"> --}}
+                                    <select name="status" class="form-control form-control-user" id="status">
+                                        {{-- <option value="" disabled>Select status</option> --}}
+                                        <option value="pending" disabled selected>Pending</option>
+                                        <option value="Approved" {{ $pendingappointment->status == 'approved' ? 'selected' : '' }}>Approved</option>
+                                        <option value="Rejected" {{ $pendingappointment->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                    </select>
+                                    @error('status')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+
+
+                                <button type="submit" class="btn btn-primary btn-user btn-block">Update</button>
+
+                            </form>
+
+
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
+                                    </div>
 
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
+
                 </div>
             </footer>
             <!-- End of Footer -->
@@ -438,35 +500,6 @@
         </div>
     </div>
 
-
-     <!-- Delete Modal-->
-     {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Ready to Delete Item?</h5>
-                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">×</span>
-                 </button>
-             </div>
-             <div class="modal-body">Select "Delete" below if you are ready to remove vehicle type.</div>
-             <div class="modal-footer">
-                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-                 <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
-
-                    @endforeach
-                    @endif
-             </div>
-         </div>
-     </div>
- </div> --}}
-
     <!-- Bootstrap core JavaScript-->
 
 
@@ -481,24 +514,9 @@
     {{-- <script src="js/sb-admin-2.min.js"></script> --}}
     <script src="{{asset('assets/admin/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
-    {{-- <script src="vendor/chart.js/Chart.min.js"></script> --}}
-    <script src="{{asset('assets/admin/vendor/chart.js/Chart.min.js')}}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{asset('assets/admin/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{asset('assets/admin/js/demo/chart-pie-demo.js')}}"></script>
-
-
      <!-- Page level plugins -->
      <script src=" {{asset('assets/admin/vendor/datatables/jquery.dataTables.min.js')}}"></script>
      <script src="{{asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-
-     <!-- Page level custom scripts -->
-     <script src="{{asset('assets/admin/js/demo/datatables-demo.js')}}"></script>
-
-
 
 </body>
 

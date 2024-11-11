@@ -6,7 +6,7 @@
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ECW-Delete Vehicle</title>
+  <title>ECW-All Appointment</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -61,7 +61,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-calendar-alt"></i>
@@ -80,7 +80,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class=" fab fa-cc-visa"></i>
@@ -107,7 +107,7 @@
                 <div id="collapseP" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Vehicle:</h6>
+                        <h6 class="collapse-header">Custom Service:</h6>
                         <a class="collapse-item" href="{{route('add-service')}}">Add Service</a>
                         <a class="collapse-item" href="{{route('updating-service')}}">Update Service</a>
                         <a class="collapse-item" href="{{route('delete-service')}}">Delete Service</a>
@@ -116,7 +116,7 @@
                 </div>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-car-alt"></i>
@@ -150,7 +150,6 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
 
         </ul>
         <!-- End of Sidebar -->
@@ -334,61 +333,84 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    @csrf
 
-                    @if (session('error'))
-                    <div class="alert alert-danger" >
-                     {{ session('error') }}
-                     </div>
-                    @endif
 
-                    @if (session('success'))
-                    <div class="alert alert-success" >
-                     {{ session('success') }}
-                     </div>
-                    @endif
 
-                    <!-- DataTales Example -->
+                                 @if (session('error'))
+                                <div class="alert alert-danger" >
+                                 {{ session('error') }}
+                                 </div>
+                                @endif
+
+                                @if (session('success'))
+                                <div class="alert alert-success" >
+                                 {{ session('success') }}
+                                 </div>
+                                @endif
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Delete Vehicle</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">All Appointment</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            {{-- <th>No</th> --}}
-                                            <th>Vehicle Type</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
 
+                                            <th>Ticket</th>
+                                            <th>Fullname</th>
+                                            <th>Email</th>
+                                            <th>Vehicle</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
-                                        @if(!empty($vehicles))
-                                        @foreach($vehicles as $vehicle)
+                                        @if(!empty($appointment))
+                                        @foreach($appointment as $appoint)
                                             <tr>
-                                                {{-- <td>{{ $vehicle->id }}</td> --}}
-                                                <td>{{ $vehicle->title }}</td>
-                                                <td><img src="{{ Storage::url($vehicle->icon) }}" alt="{{ $vehicle->title }}" width="50"></td>
-                                                <td style="text-align: center;">
-                                                    {{-- <i value="Delete" button data-toggle="modal" data-target="#deleteModal" alt="Delete" class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i> --}}
-                                                    <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                            <i class="fa fa-trash" style="font-size:20px;color:red; cursor: pointer;"></i>
-                                                        </button>
+                                                <td>{{ $appoint->ticket }}</td>
+                                                <td>{{ $appoint->name }}</td>
+                                                <td>{{ $appoint->email }}</td>
+                                                <td>{{ $appoint->vehicle }}</td>
+                                                <td>{{ $appoint->date }}</td>
+                                                <td>{{ $appoint->time }}</td>
+                                                <td>{{ $appoint->total_amount }}</td>
+                                                {{-- <td class="{{ $appoint->status == 'pending' ? 'status-yellow' : '' }}">{{ $appoint->status }}</td> --}}
+                                                {{-- <td>{{ $appoint->status }}</td> --}}
+                                                <td>
 
-                                                        </form>
+                                                    @if($appoint->status === 'Pending')
+                                                    <button class="btn btn-warning" style="background-color: yellow; color: black; border: none; cursor: default;">
+                                                        {{ $appoint->status }}
+                                                    </button>
+                                                @elseif($appoint->status === 'Approved')
+                                                    <button class="btn btn-warning" style="background-color: #82b1ff; color: black; border: none; cursor: default;">
+                                                        {{ $appoint->status }}
+                                                    </button>
+
+                                                 @elseif($appoint->status === 'Rejected')
+                                                    <button class="btn btn-warning" style="background-color: #ef5350; color: black; border: none; cursor: default;">
+                                                        {{ $appoint->status }}
+                                                    </button>
+                                                @elseif($appoint->status === 'Completed')
+                                                    <button class="btn btn-warning" style="background-color: #43a047; color: black; border: none; cursor: default;">
+                                                        {{ $appoint->status }}
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-secondary" style="border: none; cursor: default;">
+                                                        {{ $appoint->status }}
+                                                    </button>
+                                                @endif
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                         @endif
-
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
@@ -438,35 +460,6 @@
         </div>
     </div>
 
-
-     <!-- Delete Modal-->
-     {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Ready to Delete Item?</h5>
-                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">×</span>
-                 </button>
-             </div>
-             <div class="modal-body">Select "Delete" below if you are ready to remove vehicle type.</div>
-             <div class="modal-footer">
-                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-                 <form action="{{ route('destroy-vehicle', $vehicle->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
-
-                    @endforeach
-                    @endif
-             </div>
-         </div>
-     </div>
- </div> --}}
-
     <!-- Bootstrap core JavaScript-->
 
 
@@ -497,7 +490,6 @@
 
      <!-- Page level custom scripts -->
      <script src="{{asset('assets/admin/js/demo/datatables-demo.js')}}"></script>
-
 
 
 </body>

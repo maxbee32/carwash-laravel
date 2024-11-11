@@ -2695,6 +2695,8 @@
             border-color: #1cc88a;
           }
 
+          
+
           .btn-outline-success:focus, .btn-outline-success.focus {
             box-shadow: 0 0 0 0.2rem rgba(28, 200, 138, 0.5);
           }
