@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\Auth\PriceController;
 use App\Http\Controllers\Admin\Auth\ServiceController;
 use App\Http\Controllers\Admin\Auth\VehicleController;
 use App\Http\Controllers\Admin\Auth\AppointmentController;
-use App\Http\Controllers\DashboardController;
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('login', [AdminController::class, 'getLogin'])->name('adminLogin');

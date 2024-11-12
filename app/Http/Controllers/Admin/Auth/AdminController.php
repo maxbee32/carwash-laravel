@@ -38,6 +38,7 @@ class AdminController extends Controller
 
     public function getDashboard()
     {
+
         $totalVehicle = User::whereNotNull('ticket')->count();
         $total_amount = User::sum('total_amount');
         $total_car_washed = User::where('status','completed')->count();

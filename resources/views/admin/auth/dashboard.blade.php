@@ -24,17 +24,18 @@
     <!-- Custom styles for this template-->
 
     <link href="{{asset('assets/admin/css/sb-admin-2.css')}}" rel="stylesheet">
-     {{-- @vite('resources/js/app.js') --}}
-    <script src="{{ asset('js/app.js') }}"></script>
+     @vite('resources/js/app.js')
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+
      <!-- Bootstrap core JavaScript-->
      <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
      <script type="module">
          // Initialize Pusher and listen for events
-         window.Laravel = {'csrfToken': '{{csrf_token()}}'}
+        //  window.Laravel = {'csrfToken': '{{csrf_token()}}'}
          Echo.channel('totalVehicles')
              .listen('UpdateDashboard', (e) => {
-                // console.log(e.order);
+                 console.log(e.totalVehicle);
                  // Update the vehicle count on the dashboard
                  document.getElementById('total-vehicle').innerText =  e.totalVehicle;
              });

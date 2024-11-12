@@ -39,8 +39,4 @@ class UpdateDashboard implements ShouldBroadcast
     }
 
 
-//     public function broadcastAs()
-//   {
-//       return 'car.washed';
-//   }
 }
